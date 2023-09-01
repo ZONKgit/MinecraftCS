@@ -3,6 +3,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Minecraft.Classes;
 
+
 namespace Minecraft
 {
     class Game
@@ -17,6 +18,7 @@ namespace Minecraft
 
         public Game(GameWindow window)
         {
+            camera.Aspect = window.Width / window.Height;
             this.window = window;
             Start();
         }
@@ -26,7 +28,6 @@ namespace Minecraft
             window.Resize += resize;
             window.RenderFrame += renderF;
             window.Run(1.0 / 60);
-           
         }
 
         void resize(object ob, EventArgs e)
@@ -34,7 +35,7 @@ namespace Minecraft
             GL.Viewport(0, 0, window.Width, window.Height);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Matrix4 matrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI * (45 / 180f), window.Width / window.Height, 1.0f, 100.0f);
+            Matrix4 matrix = camera.GetProjectionMatrix();
             GL.LoadMatrix(ref matrix);
             GL.MatrixMode(MatrixMode.Modelview);
         }

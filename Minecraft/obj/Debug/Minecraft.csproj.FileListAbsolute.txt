@@ -108,7 +108,7 @@ D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Xml.XmlDocument.dll
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Xml.XmlSerializer.dll
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Xml.XPath.dll
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Xml.XPath.XDocument.dll
-D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenToolkit.Mathematics.dll
-D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenToolkit.Mathematics.pdb
-D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenToolkit.Mathematics.xml
 D:\Desktop\C#\Minecraft\Minecraft\obj\Debug\Minecraft.exe.config
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.pdb
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.xml
