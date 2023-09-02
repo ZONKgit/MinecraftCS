@@ -8,7 +8,7 @@ namespace Minecraft
     {
         static void Main(string[] args)
         {
-            GameWindow window = new GameWindow(1280, 720);
+            GameWindow window = new GameWindow(720, 720);
             Game gm = new Game(window);
         }
     }
