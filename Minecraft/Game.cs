@@ -25,14 +25,18 @@ namespace Minecraft
 
         void GenerateChunk()
         {
-            chunk = new Block[1024];
-            int blockNum = 1;
-            for (int x = 1; x < 16; x++)
+            chunk = new Block[16 * 16 * 16]; // Изменим размер массива для хранения большего числа блоков
+            int blockNum = 0;
+
+            for (int x = 0; x < 16; x++)
             {
-                for (int z = 1; z < 16; z++)
+                for (int y = 0; y < 16; y++)
                 {
-                    chunk[blockNum] = new Block(x, z, 0);
-                    blockNum++;
+                    for (int z = 0; z < 16; z++)
+                    {
+                        chunk[blockNum] = new Block(x * 10, y * 10, z * 10);
+                        blockNum++;
+                    }
                 }
             }
         }
@@ -67,9 +71,9 @@ namespace Minecraft
             camera.Update();
 
             // World render
-            for (int x = 1; x < 16; x++)
+            for (int i = 1; i < chunk.Length; i++)
             {
-                chunk[x].Update();
+                chunk[i].Update();
             }
 
             window.SwapBuffers();

@@ -7,7 +7,14 @@ namespace Minecraft.Classes
     {
         int id = 0;
         Vector3 position;
-        BlockRenderer render = new BlockRenderer();
+        BlockRenderer render = new BlockRenderer(new Vector3(0, 0, 0), new Vector3(1, 1, 1), 
+            new Vector4(0, 0, 1, 1),
+            new Vector4(0, 0, 1, 1),
+            new Vector4(0, 0, 1, 1),
+            new Vector4(0, 0, 1, 1),
+            new Vector4(0, 0, 1, 1),
+            new Vector4(0, 0, 1, 1)
+            );
 
         public Block(int id = 0, float posX = 0, float posY = 0, float posZ = 0)
         {

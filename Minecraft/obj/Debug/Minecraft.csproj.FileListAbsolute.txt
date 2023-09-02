@@ -112,3 +112,14 @@ D:\Desktop\C#\Minecraft\Minecraft\obj\Debug\Minecraft.exe.config
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.dll
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.pdb
 D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\OpenTK.Mathematics.xml
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\StbImageSharp.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\SixLabors.ImageSharp.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Buffers.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Memory.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Numerics.Vectors.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\SixLabors.ImageSharp.xml
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Buffers.xml
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Memory.xml
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Numerics.Vectors.xml
+D:\Desktop\C#\Minecraft\Minecraft\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
