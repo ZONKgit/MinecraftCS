@@ -16,6 +16,8 @@ namespace Minecraft
         BlockRenderer block1 = new BlockRenderer();
         BlockRenderer block2 = new BlockRenderer();
 
+    
+
         public Game(GameWindow window)
         {
             camera.Aspect = window.Width / window.Height;
@@ -46,6 +48,8 @@ namespace Minecraft
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
       
             camera.Update();
+
+            // World render
 
             block1.PosX = -10.0f;
             block1.PosY = -20.0f;

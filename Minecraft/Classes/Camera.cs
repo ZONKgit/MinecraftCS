@@ -15,98 +15,78 @@ namespace Minecraft.Classes
         private float SPEED = 2f;
         private float SENSITIVITY = 180f;
 
-
         public float Aspect;
 
         // Position vars
         public TKMathVector3 position;
-        TKMathVector3 up = TKMathVector3.UnitY;
-        TKMathVector3 front = -TKMathVector3.UnitZ;
-        TKMathVector3 right = TKMathVector3.UnitX;
-
-        // Rotations
-        private float pitch;
-        private float yaw = -90.0f;
-
-        private bool firstMove = false;
-        public Vector2 lastPosition;
-
-        public TKMathMatrix4 GetViewMatrix()
-        {
-            return TKMathMatrix4.LookAt(position, position + front, up);
-        }
-        public TKMatrix4 GetProjectionMatrix()
-        {
-            return TKMatrix4.CreatePerspectiveFieldOfView((float)Math.PI * (45 / 180f), Aspect, 1.0f, 10000.0f);
-        }
-        
-        private void UpdateVectors()
-        {
-            front.X = (float)Math.Cos(MathHelper.DegreesToRadians(pitch)) * (float)Math.Cos(MathHelper.DegreesToRadians(yaw));
-            front.Y = (float)Math.Sin(MathHelper.DegreesToRadians(pitch));
-            front.Z = (float)Math.Cos(MathHelper.DegreesToRadians(pitch)) * (float)Math.Sin(MathHelper.DegreesToRadians(yaw));
-
-            front = TKMathVector3.Normalize(front);
-            right = TKMathVector3.Normalize(TKMathVector3.Cross(front, TKMathVector3.UnitY));
-            up = TKMathVector3.Normalize(TKMathVector3.Cross(right, front));
+        public TKMathVector3 rotation;
 
 
 
-        }
 
         private void InputController()
         {
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = new MouseState();
+            float speed = 0;
+            float ugol = rotation.Z / 180 * (float)Math.PI;
 
             if (keyboardState.IsKeyDown(Key.W))
             {
-                position -= front * SPEED;
+                speed = -SPEED;
             }
             if (keyboardState.IsKeyDown(Key.S))
             {
-                position += front * SPEED;
+                speed = SPEED;
             }
             if (keyboardState.IsKeyDown(Key.A))
             {
-                position += right * SPEED;
+                speed = SPEED;
+                ugol += (float)Math.PI * 0.5f;
             }
             if (keyboardState.IsKeyDown(Key.D))
             {
-                position -= right * SPEED;
-            }
-            if (keyboardState.IsKeyDown(Key.LShift))
-            {
-                position += up * SPEED;
-            }
-            if (keyboardState.IsKeyDown(Key.Space))
-            {
-                position -= up * SPEED;
+                speed = SPEED;
+                ugol -= (float)Math.PI * 0.5f;
             }
 
-            if (firstMove)
+            if (keyboardState.IsKeyDown(Key.Up))
             {
-                lastPosition = new Vector2(mouseState.X, mouseState.Y);
-                firstMove = false;
+                rotation.X -= SPEED;
             }
-            else
+            if (keyboardState.IsKeyDown(Key.Down))
             {
-                var deltaX = mouseState.X - lastPosition.X;
-                var deltaY = mouseState.Y - lastPosition.Y;
-                Console.WriteLine(mouseState.X);
-                Console.WriteLine(mouseState.Y);
-                lastPosition = new Vector2(mouseState.X, mouseState.Y);
-
-                yaw += deltaX * SENSITIVITY;
-                pitch += deltaY * SENSITIVITY;
+                rotation.X += SPEED;
             }
-            UpdateVectors();
+            if (keyboardState.IsKeyDown(Key.Right))
+            {
+                rotation.Z += SPEED;
+            }
+            if (keyboardState.IsKeyDown(Key.Left))
+            {
+                rotation.Z -= SPEED;
+            }
 
+            if (speed != 0)
+            {
+                position.X += (float)Math.Sin(ugol) * speed;
+                position.Y += (float)Math.Cos(ugol) * speed;
+            }
+
+        }
+
+        public TKMatrix4 GetProjectionMatrix()
+        {
+            return TKMatrix4.CreatePerspectiveFieldOfView((float)Math.PI * (45 / 180f), Aspect, 1.0f, 10000.0f);
         }
 
         public void Update()
         {
+         
+            GL.Rotate(rotation.X, 1, 0, 0);
+            GL.Rotate(rotation.Z, 0, 0, 1);
             GL.Translate(position.X, position.Y, position.Z);
+            Console.WriteLine(position);
             InputController();
         }
 
