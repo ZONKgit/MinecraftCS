@@ -18,6 +18,15 @@ namespace Minecraft.Classes
             //GenerateWorld();
         }
 
+        public Block GetBlockAtPosition(Vector3 position)
+        {
+            // Найдите чанк, в котором находится позиция, и получите блок из чанка
+            int chunkX = (int)Math.Floor(position.X / Chunk.ChunkSize);
+            int chunkZ = (int)Math.Floor(position.Z / Chunk.ChunkSize);
+
+            // Обработайте граничные условия и верните блок
+            return chunks[chunkX, chunkZ].GetBlockAtPosition(position);
+        }
         public void Update()
         {
             chunks[0,0].Update();

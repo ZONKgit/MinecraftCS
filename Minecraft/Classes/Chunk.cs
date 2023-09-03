@@ -64,7 +64,7 @@ namespace Minecraft.Classes
                         // Определите блок на основе высоты
                         if (y < height)
                         {
-                            Block block = new Block(0, x*2, y*2, z*2);
+                            Block block = new Block(0, x, y, z);
                             block.render.chunk = this;
                             blocks[x, y, z] = block; // Здесь можно определить блок для земли или других элементов ландшафта
                             Console.WriteLine("X:{0} Y:{1} Z:{2}",x,y,z);
