@@ -8,13 +8,15 @@ using System.Drawing.Imaging;
 
 namespace Minecraft.Classes
 {
-    class BlockRenderer
+    public class BlockRenderer
     {
         // Transforms var
         public Vector3 position;
         public Vector3 scale;
 
-        public bool gridMode = true;
+        public bool useTexture = true;
+
+        public Chunk chunk;
 
         // UV Coords vars
         Vector4 Side1UV = new Vector4(0, 0, 1, 1);
@@ -71,44 +73,67 @@ namespace Minecraft.Classes
 
         public void Update()
         {
-            GL.Enable(EnableCap.Texture2D);
+            if (useTexture) GL.Enable(EnableCap.Texture2D);
             GL.Begin(BeginMode.Quads);
 
+            Block block;
 
-            GL.TexCoord2(Side1UV.X, Side1UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.Z, Side1UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.Z, Side1UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.X, Side1UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            block = chunk.GetBlockAtPosition(position / 2 + new Vector3(0, 0, -1));
+            if (block == null)
+            {
+                GL.TexCoord2(Side1UV.X, Side1UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+                GL.TexCoord2(Side1UV.X, Side1UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side1UV.Z, Side1UV.Y); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side1UV.Z, Side1UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            }
 
-            GL.TexCoord2(Side2UV.X, Side2UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.Z, Side2UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.Z, Side2UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.X, Side2UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            block = chunk.GetBlockAtPosition(position/2 + new Vector3(0, 0, 1));
+            if (block == null)
+            {
+                GL.TexCoord2(Side2UV.X, Side2UV.W); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+                GL.TexCoord2(Side2UV.X, Side2UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side2UV.Z, Side2UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side2UV.Z, Side2UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            }
+
+            block = chunk.GetBlockAtPosition(position/2 + new Vector3(1, 0, 0));
+            if (block == null)
+            {
+                GL.TexCoord2(Side3UV.X, Side3UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+                GL.TexCoord2(Side3UV.X, Side3UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side3UV.Z, Side3UV.Y); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side3UV.Z, Side3UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, 1.0 + position.Z);
+            }
+
+            block = chunk.GetBlockAtPosition(position/2 + new Vector3(-1, 0, 0));
+            if (block == null)
+            {
+            GL.TexCoord2(Side4UV.X, Side4UV.W); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, 1.0 + position.Z);
+            GL.TexCoord2(Side4UV.X, Side4UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -1.0 + position.Z);
+            GL.TexCoord2(Side4UV.Z, Side4UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side4UV.Z, Side4UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            }
+            
+            block = chunk.GetBlockAtPosition(position/2 + new Vector3(0, 1, 0));
+            if (block == null)
+            {//
+                GL.TexCoord2(Side5UV.X, Side5UV.W); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side5UV.X, Side5UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side5UV.Z, Side5UV.Y); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+                GL.TexCoord2(Side5UV.Z, Side5UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            }
 
 
-            GL.TexCoord2(Side3UV.X, Side3UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.Z, Side3UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.Z, Side3UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.X, Side3UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, 1.0 + position.Z);
 
-
-            GL.TexCoord2(Side4UV.X, Side4UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, 1.0 + position.Z);
-            GL.TexCoord2(Side4UV.Z, Side4UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -1.0 + position.Z);
-            GL.TexCoord2(Side4UV.Z, Side4UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side4UV.X, Side4UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
-
-
-            GL.TexCoord2(Side5UV.X, Side5UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.Z, Side5UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.Z, Side5UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.X, Side5UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
-
-
-            GL.TexCoord2(Side6UV.X, Side6UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.Z, Side6UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.Z, Side6UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.X, Side6UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
-
+            block = chunk.GetBlockAtPosition(position/2 + new Vector3(0, -1, 0));
+            if (block == null)
+            {
+            GL.TexCoord2(Side6UV.X, Side6UV.W); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.X, Side6UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.Z, Side6UV.Y); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.Z, Side6UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            }  
+            
             GL.End();
             GL.Disable(EnableCap.Texture2D);
             

@@ -4,13 +4,12 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System.Windows.Forms;
 using TKMatrix4 = OpenTK.Matrix4; // Псевдоним для OpenTK.Matrix4
-using TKMathMatrix4 = OpenTK.Mathematics.Matrix4; // Псевдоним для OpenTK.Mathematics.Matrix4
-using TKMathVector3 = OpenTK.Mathematics.Vector3; // Псевдоним для OpenTK.Mathematics.Vector3
+
 
 
 namespace Minecraft.Classes
 {
-    class Camera
+    public class Camera
     {
         //Constants
         private float SPEED = 1f;
@@ -20,8 +19,8 @@ namespace Minecraft.Classes
         public float Aspect;
 
         // Position vars
-        public TKMathVector3 position;
-        public TKMathVector3 rotation;
+        public Vector3 position;
+        public Vector3 rotation;
 
 
         private void Rotate(float xAngle, float zAngle)

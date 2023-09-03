@@ -17,9 +17,10 @@ namespace Minecraft
             camera.Aspect = window.Width / window.Height;
             camera.window = window;
             this.window = window;
-
+            
             world = new World();
             world.GenerateWorld();
+
 
             Start(); 
         }

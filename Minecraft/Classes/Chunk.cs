@@ -5,9 +5,9 @@ namespace Minecraft.Classes
 {
     public class Chunk
     {
-        public const int ChunkSize = 16; // Размер чанка (по умолчанию 16x16x16)
+        public const int ChunkSize = 8; // Размер чанка (по умолчанию 16x16x16)
 
-        private Block[,,] blocks;
+        public Block[,,] blocks;
 
         public void Update()
         {
@@ -23,6 +23,27 @@ namespace Minecraft.Classes
                         }
                     }
                 }
+            }
+        }
+
+        public Block GetBlockAtPosition(Vector3 position)
+        {
+            // Найдите блок в чанке по позиции
+            int x = (int)position.X;
+            int y = (int)position.Y;
+            int z = (int)position.Z;
+
+            // Проверка на граничные условия
+            if (x >= 0 && x < Chunk.ChunkSize &&
+                y >= 0 && y < Chunk.ChunkSize &&
+                z >= 0 && z < Chunk.ChunkSize)
+            {
+                return blocks[x, y, z];
+            }
+            else
+            {
+                // Вернуть что-то, что обозначает отсутствие блока (например, пустой блок или null)
+                return null;
             }
         }
 
@@ -43,7 +64,10 @@ namespace Minecraft.Classes
                         // Определите блок на основе высоты
                         if (y < height)
                         {
-                            blocks[x, y, z] = new Block(0, x*2, y*2, z*2); // Здесь можно определить блок для земли или других элементов ландшафта
+                            Block block = new Block(0, x*2, y*2, z*2);
+                            block.render.chunk = this;
+                            blocks[x, y, z] = block; // Здесь можно определить блок для земли или других элементов ландшафта
+                            Console.WriteLine("X:{0} Y:{1} Z:{2}",x,y,z);
                         }
                         else
                         {
