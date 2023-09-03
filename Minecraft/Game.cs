@@ -8,45 +8,24 @@ namespace Minecraft
 {
     class Game
     {
-
-
         GameWindow window;
         Camera camera = new Camera();
+        World world;
 
-        Block[] chunk;
-        
         public Game(GameWindow window)
         {
             camera.Aspect = window.Width / window.Height;
             camera.window = window;
             this.window = window;
-            Start();
-        }
 
-        void GenerateChunk()
-        {
-            chunk = new Block[16 * 16 * 16]; // Изменим размер массива для хранения большего числа блоков
-            int blockNum = 0;
+            world = new World();
+            world.GenerateWorld();
 
-            for (int x = 0; x < 16; x++)
-            {
-                for (int y = 0; y < 16; y++)
-                {
-                    for (int z = 0; z < 16; z++)
-                    {
-                        chunk[blockNum] = new Block(x * 10, y * 10, z * 10);
-                        blockNum++;
-                    }
-                }
-            }
+            Start(); 
         }
 
         void Start()
         {
-
-            GenerateChunk();
-
-
             window.Load += loaded;
             window.Resize += resize;
             window.RenderFrame += renderF;
@@ -70,11 +49,7 @@ namespace Minecraft
       
             camera.Update();
 
-            // World render
-            for (int i = 1; i < chunk.Length; i++)
-            {
-                chunk[i].Update();
-            }
+            world.Update();
 
             window.SwapBuffers();
 

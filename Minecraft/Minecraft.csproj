@@ -78,6 +78,8 @@
     <Compile Include="Classes\Block.cs" />
     <Compile Include="Classes\BlockRenderer.cs" />
     <Compile Include="Classes\Camera.cs" />
+    <Compile Include="Classes\Chunk.cs" />
+    <Compile Include="Classes\World.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

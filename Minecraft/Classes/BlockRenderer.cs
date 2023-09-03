@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -9,8 +10,11 @@ namespace Minecraft.Classes
 {
     class BlockRenderer
     {
+        // Transforms var
         public Vector3 position;
         public Vector3 scale;
+
+        public bool gridMode = true;
 
         // UV Coords vars
         Vector4 Side1UV = new Vector4(0, 0, 1, 1);
@@ -28,10 +32,10 @@ namespace Minecraft.Classes
             // Load UV
             Side1UV = UV1;
             Side2UV = UV2;
-            Side2UV = UV2;
-            Side2UV = UV2;
-            Side2UV = UV2;
-            Side2UV = UV2;
+            Side3UV = UV3;
+            Side4UV = UV4;
+            Side5UV = UV5;
+            Side6UV = UV6;
 
 
             texture = LoadTexture("Assets/Textures/Atlas.png");
@@ -71,42 +75,43 @@ namespace Minecraft.Classes
             GL.Begin(BeginMode.Quads);
 
 
-            GL.TexCoord2(Side1UV.X, Side1UV.Y); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.Z, Side1UV.Y); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.Z, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side1UV.X, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
+            GL.TexCoord2(Side1UV.X, Side1UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side1UV.Z, Side1UV.Y); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side1UV.Z, Side1UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side1UV.X, Side1UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
 
-            GL.TexCoord2(Side2UV.X, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.Z, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.Z, Side1UV.W); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side2UV.X, Side1UV.W); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-
-
-            GL.TexCoord2(Side3UV.X, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.Z, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.Z, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side3UV.X, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, 1.0 + position.Z);
+            GL.TexCoord2(Side2UV.X, Side2UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side2UV.Z, Side2UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side2UV.Z, Side2UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side2UV.X, Side2UV.W); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
 
 
-            GL.TexCoord2(Side4UV.X, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, 1.0 + position.Z);
-            GL.TexCoord2(Side4UV.Z, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, -1.0 + position.Z);
-            GL.TexCoord2(Side4UV.Z, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side4UV.X, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
+            GL.TexCoord2(Side3UV.X, Side3UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side3UV.Z, Side3UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side3UV.Z, Side3UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side3UV.X, Side3UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, 1.0 + position.Z);
 
 
-            GL.TexCoord2(Side5UV.X, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.Z, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.Z, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
-            GL.TexCoord2(Side5UV.X, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, -1 * scale.Z + position.Z);
+            GL.TexCoord2(Side4UV.X, Side4UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, 1.0 + position.Z);
+            GL.TexCoord2(Side4UV.Z, Side4UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -1.0 + position.Z);
+            GL.TexCoord2(Side4UV.Z, Side4UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side4UV.X, Side4UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
 
 
-            GL.TexCoord2(Side6UV.X, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, 1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.Z, Side1UV.Y); GL.Vertex3(1 * scale.X + position.X, -1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.Z, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, -1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
-            GL.TexCoord2(Side6UV.X, Side1UV.W); GL.Vertex3(-1 * scale.X + position.X, 1 * scale.Y + position.Y, 1 * scale.Z + position.Z);
+            GL.TexCoord2(Side5UV.X, Side5UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side5UV.Z, Side5UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side5UV.Z, Side5UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, -scale.Z + position.Z);
+            GL.TexCoord2(Side5UV.X, Side5UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, -scale.Z + position.Z);
+
+
+            GL.TexCoord2(Side6UV.X, Side6UV.Y); GL.Vertex3(scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.Z, Side6UV.Y); GL.Vertex3(scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.Z, Side6UV.W); GL.Vertex3(-scale.X + position.X, -scale.Y + position.Y, scale.Z + position.Z);
+            GL.TexCoord2(Side6UV.X, Side6UV.W); GL.Vertex3(-scale.X + position.X, scale.Y + position.Y, scale.Z + position.Z);
 
             GL.End();
             GL.Disable(EnableCap.Texture2D);
+            
         }
     }
 }
